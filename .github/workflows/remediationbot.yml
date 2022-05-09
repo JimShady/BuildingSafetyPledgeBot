@@ -1,8 +1,11 @@
 name: remediationbot
 
 on:
-  schedule:
-    - cron: '26 22 * * *'  # once every two hours
+  #schedule:
+  #  - cron: '0 */3 * * *'
+  push:
+    branches:
+      - master
 
 jobs:
   remediationbot-post:
