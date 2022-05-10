@@ -1,11 +1,8 @@
 name: remediationbot
 
 on:
-  #schedule:
-  #  - cron: '0 */3 * * *'
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '15 12 * * *'
 
 jobs:
   remediationbot-post:
@@ -19,6 +16,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - name: Install rtweet package
-        run: Rscript -e 'install.packages("rtweet", dependencies = TRUE)'
+        run: Rscript -e 'install.packages(c("rtweet","readr", "lubridate", "glue"), dependencies = TRUE)'
       - name: Create and post tweet
         run: Rscript remediationbot-tweet.R

@@ -1,5 +1,10 @@
+library("rtweet")
+library("readr")
+library("lubridate")
+library("glue")
+
 # Create Twitter token
-remediationbot_token <- rtweet::create_token(
+remediationbot_token <- create_token(
   app = "BuildingSafetyPledgeBot",
   consumer_key =    Sys.getenv("TWITTER_API_KEY"),
   consumer_secret = Sys.getenv("TWITTER_API_KEY_SECRET"),
@@ -8,9 +13,22 @@ remediationbot_token <- rtweet::create_token(
   set_renv = FALSE
 )
 
-# Post the image to Twitter
-rtweet::post_tweet(
-  status = "Testing local deployment (again)",
+companies_yet_to_sign <- read_csv("companies_yet_to_sign.csv", col_types = cols())
+
+days_since <- as.Date("2022-04-12", format = "%Y-%m-%d")
+
+for (i in 1:nrow(companies_yet_to_sign)) {
+
+  days <- today() - days_since
+  companies <- companies_yet_to_sign[i,]$twitter_handles
+
+#Post the image to Twitter
+post_tweet(
+  status = glue("It has been {days} days since the UK's largest homebuilders agreed to pay for the remediation of the defective buildings they built. Why are {companies} not on the list? #endourcladdingscandal #buildingsafetycrisis https://www.gov.uk/guidance/list-of-developers-who-have-signed-building-safety-repairs-pledge"), # nolint
   #media = temp_file,
   token = remediationbot_token
 )
+
+Sys.sleep(10)
+
+}
