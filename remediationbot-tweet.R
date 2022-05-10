@@ -10,7 +10,7 @@ remediationbot_token <- rtweet::create_token(
 
 # Post the image to Twitter
 rtweet::post_tweet(
-  status = "Hello world!",
+  status = "Testing local deployment",
   #media = temp_file,
   token = remediationbot_token
 )
