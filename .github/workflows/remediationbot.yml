@@ -2,7 +2,7 @@ name: remediationbot
 
 on:
   schedule:
-    - cron: '15 * * * *'
+    - cron: '10 9-17 * * 1-5'
 
 jobs:
   remediationbot-post:
