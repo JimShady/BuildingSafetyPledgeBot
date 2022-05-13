@@ -1,9 +1,13 @@
 name: remediationbot
 
+#on:
+#  schedule:
+#      - cron: '10 9-17 * * 1-5'
 on:
-  schedule:
-    - cron: '15 12 * * *'
-
+  push:
+    branches:
+      - master
+      
 jobs:
   remediationbot-post:
     runs-on: macOS-latest
