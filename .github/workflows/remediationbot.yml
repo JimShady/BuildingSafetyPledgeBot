@@ -22,4 +22,4 @@ jobs:
       - name: Install rtweet package
         run: Rscript -e 'install.packages(c("rtweet","readr", "lubridate", "glue"), dependencies = TRUE)'
       - name: Create and post tweet
-        run: Rscript remediationbot-tweet.R
+        run: Rscript remediationbot-randombuildertweet.R
