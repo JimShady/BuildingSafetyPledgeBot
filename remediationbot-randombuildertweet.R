@@ -14,20 +14,27 @@ remediationbot_token <- create_token(
   set_renv = FALSE
 )
 
-builders_yet_to_sign <- read_csv("builders_yet_to_sign.csv", col_types = cols())
+builders <- read_csv("builders.csv", col_types = cols()) %>%
+              filter(signed_pledge == 'No')
 
 days_since <- as.Date("2022-04-12", format = "%Y-%m-%d")
 
-i <- sample(1:nrow(builders_yet_to_sign),1)
+i <- sample(1:nrow(builders),1)
 
 days <- today() - days_since
 
-builder_name <- builders_yet_to_sign[i,]$company_name
-builder_twitter <- builders_yet_to_sign[i,]$twitter_handles
+builder_name <- builders[i,]$company_short_name
+builder_twitter <- builders[i,]$twitter_handles
 
 #Post the image to Twitter
-post_tweet(
-  status = glue("{days} days ago the UK's largest homebuilders agreed to pay to fix the defective buildings they built. Why are {builder_name} ({builder_twitter}) not on the list? #endourcladdingscandal #buildingsafetycrisis https://www.gov.uk/guidance/list-of-developers-who-have-signed-building-safety-repairs-pledge"), # nolint
-  #media = temp_file,
-  token = remediationbot_token
-)
+if (is.na(builder_twitter)) {
+    post_tweet(
+    status = glue("{days} days ago the UK's largest homebuilders agreed to pay to fix the defective buildings they built. Why are {builder_name} not on the list? #endourcladdingscandal #buildingsafetycrisis https://www.gov.uk/guidance/list-of-developers-who-have-signed-building-safety-repairs-pledge"), # nolint
+    #media = temp_file,
+    token = remediationbot_token)
+} else {
+    post_tweet(
+    status = glue("{days} days ago the UK's largest homebuilders agreed to pay to fix the defective buildings they built. Why are {builder_name} ({builder_twitter}) not on the list? #endourcladdingscandal #buildingsafetycrisis https://www.gov.uk/guidance/list-of-developers-who-have-signed-building-safety-repairs-pledge"), # nolint
+    #media = temp_file,
+    token = remediationbot_token)
+}
