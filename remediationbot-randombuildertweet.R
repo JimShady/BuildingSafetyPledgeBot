@@ -5,13 +5,11 @@ library("glue")
 library("dplyr")
 
 # Create Twitter token
-remediationbot_token <- create_token(
-  app = "BuildingSafetyPledgeBot",
-  consumer_key =    Sys.getenv("TWITTER_API_KEY"),
-  consumer_secret = Sys.getenv("TWITTER_API_KEY_SECRET"),
+remediationbot_token <- rtweet_bot(
+  api_key =    Sys.getenv("TWITTER_API_KEY"),
+  api_secret = Sys.getenv("TWITTER_API_KEY_SECRET"),
   access_token =    Sys.getenv("TWITTER_ACCESS_TOKEN"),
-  access_secret =   Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"),
-  set_renv = FALSE
+  access_secret =   Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET")
 )
 
 builders <- read_csv("builders.csv", col_types = cols()) %>%
